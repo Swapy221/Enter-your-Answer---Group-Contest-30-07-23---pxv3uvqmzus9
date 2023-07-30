@@ -55,7 +55,6 @@ function Quiz() {
       }
     } else {
       setAttempts(attempts + 1);
-      setAnswer("");
 
       if (attempts >= 2) {
         setQuestionIndex(questionIndex + 1);
@@ -90,18 +89,24 @@ function Quiz() {
 
   return (
     <div>
-      <h1 className="question-text">{questions[questionIndex].question}</h1>
-      <input
-        className="answer-input"
-        value={answer}
-        onChange={handleAnswerChange}
-        disabled={attempts >= 2}
-      /><br />
-      {attempts < 2 && (
-        <button className="submit-btn" onClick={checkAnswer}>Submit</button>
-      )}
-      {attempts > 0 && (
-        <p className="attempt-alert">Incorrect. {2 - attempts} {attempts === 1 ? 'attempt' : 'attempts'} remaining.</p>
+      {questionIndex < questions.length ? (
+        <>
+          <h1 className="question-text">{questions[questionIndex].question}</h1>
+          <input
+            className="answer-input"
+            value={answer}
+            onChange={handleAnswerChange}
+            disabled={attempts >= 2}
+          /><br />
+          {attempts > 0 && (
+            <p className="attempt-alert">Incorrect. {2 - attempts} {attempts === 1 ? 'attempt' : 'attempts'} remaining.</p>
+          )}
+          {attempts < 2 && (
+            <button className="submit-btn" onClick={checkAnswer}>Submit</button>
+          )}
+        </>
+      ) : (
+        <p>No more questions.</p>
       )}
     </div>
   );
